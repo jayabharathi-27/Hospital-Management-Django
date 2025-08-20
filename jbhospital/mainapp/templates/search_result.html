@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   Search : {{query}}
+{% endblock %}
+
+{% block content %}
+<section>
+    <h1>
+        Search results for : <small>{{query.capitalize}}</small>
+    </h1>
+</section>
+<section class="main-container">
+    {% for doctor in doctorss %}
+      {% include 'includes/doctorCard.html' %}
+    {% empty %}
+    <h2 class="text-info bg-dark">
+        No Results
+    </h2>
+    {% endfor %}
+</section>
+{% endblock %}

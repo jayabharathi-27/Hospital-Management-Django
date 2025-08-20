@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Doctors
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+
+  <!-- Page Heading -->
+  <h2 class="text-center mb-4">Our Doctors</h2>
+
+  <!-- Filter Form -->
+  <form method="get" class="mb-4 text-center">
+    <div class="d-inline-block">
+      <select name="specialization" class="form-select" onchange="this.form.submit()">
+        <option value="">-- All Specializations --</option>
+        {% for spec in specializations %}
+          <option value="{{ spec.title }}" {% if spec.title == selected_specialization %}selected{% endif %}>
+            {{ spec.title }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+
+  <!-- Doctors List -->
+  <div class="row">
+    {% for doctor in doctors %}
+      {% include 'includes/doctorCard.html' %}
+    {% empty %}
+      <p class="text-center text-muted">No doctors found for this specialization.</p>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

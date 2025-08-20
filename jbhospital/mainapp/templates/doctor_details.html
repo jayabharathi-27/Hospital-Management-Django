@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{doctor.name}}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid" id="doctor-details">
+    <div class="row">
+        <div class="col">
+            <img src="{{doctor.profile_image.url}}" class="w-100" alt="">
+        </div>
+        <div class="col">
+            <h2>
+                {{doctor.name.capitalize}}
+            </h2>
+            <p>
+                <div class="spec-row">
+                    {% for spec in doctor.specialization.all %}
+                    <span class="spec-card">{{spec}}</span>
+                    {% endfor %}
+                </div>
+            </p>
+            <p>
+                {{doctor.bio}}
+            </p>
+
+
+            <div class="row">
+                
+                {% if user.is_staff %}
+                <a href="{% url 'edit_doctor' doctor.pk %}" class="col-sm-4 btn btn-warning">Edit</a>
+                <a href="{% url 'del_doctor' doctor.pk %}" class="col-sm-4 btn btn-danger">Delete Doctor</a>
+                {% else %}
+                <a href="{% url 'book_appointment' doctor.id %}" class="col-sm-4 btn btn-primary">Make Appointment</a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

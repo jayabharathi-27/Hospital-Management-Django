@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Family Member{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h3 class="mb-4 text-center">Edit Family Member</h3>
+
+  <div class="row g-4 align-items-start">
+    <!-- Left column: Preview card -->
+    <div class="col-lg-5 col-md-6">
+      <div class="card shadow-sm">
+        {% if object.img %}
+          <img src="{{ object.img.url }}" 
+               class="card-img-top img-fluid" 
+               style="object-fit: cover; height: 250px; object-position: top;">
+        {% else %}
+          <div class="p-5 text-center text-muted">No Profile Image</div>
+        {% endif %}
+        <div class="card-body text-center">
+          <h5 class="card-title mb-1">{{ object.first_name }} {{ object.last_name }}</h5>
+          <p class="card-text"><strong>{{ object.get_relation_display }}</strong> • {{ object.get_gender_display }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: Form -->
+    <div class="col-lg-7 col-md-6">
+      <div class="p-4 shadow-sm bg-white rounded">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+          {% for field in form %}
+            <div class="mb-3">
+              {{ field.label_tag }}
+              {{ field }}
+              {% if field.errors %}
+                <div class="invalid-feedback d-block">
+                  {% for error in field.errors %}
+                    {{ error }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

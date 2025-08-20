@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Appointment Calendar (Next 7 Days)</h2>
+    <hr>
+
+    {% for doctor_data in calendar %}
+        <h4>{{ doctor_data.doctor }}</h4>
+        <table class="table table-bordered mb-4">
+            <thead>
+                <tr>
+                    {% for date in dates %}
+                        <th>{{ date|date:"D, M d" }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for day in doctor_data.days %}
+                        <td>
+                            {% for slot_info in day.slots %}
+                                <div class="mb-1 p-1 {% if slot_info.appointment %}bg-danger text-white{% else %}bg-success text-white{% endif %}">
+                                    {{ slot_info.slot.start_time|time:"H:i" }} - {{ slot_info.slot.end_time|time:"H:i" }}
+                                    {% if slot_info.appointment %}
+                                        <br><small>{{ slot_info.appointment.patient }}</small>
+                                    {% else %}
+                                        <br><small>Available</small>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    {% empty %}
+        <p>No appointment slots available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

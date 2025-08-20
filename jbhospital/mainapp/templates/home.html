@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+     Home
+{% endblock %}
+{% block content %}
+<section id="carousel">
+
+      {%include 'includes/carousel.html'%}
+
+</section>
+<section class="container my-4">
+  <div class="row">
+    {% for doctor in doctors %}
+      {% include 'includes/doctorCard.html' %}
+    {% endfor %}
+  </div>
+</section>
+
+
+
+{% endblock %}

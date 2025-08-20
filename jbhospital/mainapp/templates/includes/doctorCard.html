@@ -1,0 +1,33 @@
+<div class="col-12 col-md-6 col-lg-3 mb-4">
+  <div class="card h-100 shadow-sm">
+
+    <!-- Doctor Image -->
+    <img src="{{ doctor.profile_image.url }}" 
+         class="card-img-top doctor-img" 
+         alt="Doctor Image">
+
+    <!-- Card Body -->
+    <div class="card-body d-flex flex-column">
+      
+      <!-- Doctor Name -->
+      <h5 class="card-title text-center mb-2">
+        <a href="{% url 'doc_details' doctor.pk %}" class="text-decoration-none">
+          {{ doctor.name }}
+        </a>
+      </h5>
+      
+      <!-- Specializations -->
+      <p class="card-text text-muted small text-center mb-3">
+        {% for spec in doctor.specialization.all %}
+          <span class="badge bg-info text-dark me-1">{{ spec }}</span>
+        {% endfor %}
+      </p>
+      
+      <!-- Book Button -->
+      <div class="mt-auto text-center z-2">
+        <a href="{% url 'book_appointment' doctor.id %}" class="btn btn-secondary btn-sm">Book</a>
+      </div>
+
+    </div>
+  </div>
+</div>

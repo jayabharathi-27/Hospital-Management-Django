@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Add Family Member{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <h3 class="mb-4 text-center">Add Family Member</h3>
+
+      <form method="post" enctype="multipart/form-data" class="p-4 shadow-sm bg-white rounded">
+        {% csrf_token %}
+
+        {% for field in form %}
+          <div class="mb-3">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field }}
+
+            {% if field.errors %}
+              <div class="invalid-feedback d-block">
+                {% for error in field.errors %}
+                  {{ error }}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+              <div>{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Save Member</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Appointments{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h3 class="mb-4 text-center">My Appointments</h3>
+
+  {% if appointments %}
+    <div class="row g-4">
+      {% for appt in appointments %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card h-100 shadow-sm">
+
+            <!-- Doctor Image -->
+            <div class="position-relative">
+              {% if appt.doctor.profile_image %}
+                <img src="{{ appt.doctor.profile_image.url }}" class="card-img-top doctor-img" alt="{{ appt.doctor.first_name }}">
+              {% else %}
+                <img src="{% static 'images/default-doctor.png' %}" class="card-img-top doctor-img" alt="No doctor image">
+              {% endif %}
+
+              <!-- Patient Image as a small circle -->
+              <img 
+                src="{% if appt.patient.img %}{{ appt.patient.img.url }}{% else %}{% static 'images/default-patient.png' %}{% endif %}" 
+                class="patient-img rounded-circle border border-white shadow-sm" 
+                alt="{{ appt.patient.first_name }}">
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">{{ appt.doctor.name }}</h5>
+              <p class="card-text mb-1"><strong>Doctor:</strong> {{ appt.doctor.first_name }} {{ appt.doctor.last_name }}</p>
+              <p class="card-text mb-1"><strong>Patient:</strong> {{ appt.patient.first_name }} {{ appt.patient.last_name }} ({{ appt.patient.get_relation_display }})</p>
+              <p class="card-text mb-1"><strong>Date:</strong> {{ appt.booking_date }}</p>
+              <p class="card-text mb-1"><strong>Time Slot:</strong> {{ appt.booked_for.start_time|time:"H:i" }} - {{ appt.booked_for.end_time|time:"H:i" }}</p>
+              <p class="card-text"><strong>Status:</strong> 
+                <span class="badge bg-info text-dark">{{ appt.get_status_display }}</span>
+              </p>
+            </div>
+
+            <div class="card-footer text-center">
+              <a href="#" class="btn btn-sm btn-outline-primary">Reschedule</a>
+              <a href="#" class="btn btn-sm btn-outline-danger">Cancel</a>
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      You don’t have any appointments yet.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

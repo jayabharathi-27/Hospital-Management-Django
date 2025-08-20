@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Appointment Time Slot</h2>
+    <hr>
+
+    <!-- Display Django messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Doctor Field -->
+        <div class="mb-3">
+            {{ form.doctor.label_tag }}
+            {{ form.doctor }}
+            {% if form.doctor.errors %}
+                <div class="text-danger">{{ form.doctor.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Start Time Field -->
+        <div class="mb-3">
+            {{ form.start_time.label_tag }}
+            {{ form.start_time }}
+            {% if form.start_time.errors %}
+                <div class="text-danger">{{ form.start_time.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- End Time Field -->
+        <div class="mb-3">
+            {{ form.end_time.label_tag }}
+            {{ form.end_time }}
+            {% if form.end_time.errors %}
+                <div class="text-danger">{{ form.end_time.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Time Slot</button>
+    </form>
+</div>
+{% endblock %}

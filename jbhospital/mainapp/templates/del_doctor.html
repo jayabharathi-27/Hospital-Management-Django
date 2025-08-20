@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}
+Make Appointment
+{% endblock %}
+
+
+{% block content %}
+<div class="w-50 mx-auto" >
+    <h3>Are you sure you want to Delete : {{doctor.name}}</h3>
+    <form method="post" enctype="multipart/form-data" class="form-control">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-danger mx-auto">Delete</button>
+        <a href="{% url 'homepage' %}" class="btn btn-warning">Cancel</a>
+    </form>
+
+</div>
+
+{% endblock %}

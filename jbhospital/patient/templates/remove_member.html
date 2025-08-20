@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Remove Family Member{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card shadow-lg p-4 text-center">
+        <h4 class="mb-3 text-danger">Are you sure you want to remove this member?</h4>
+
+        {% if object.img %}
+          <img src="{{ object.img.url }}" class="img-fluid rounded mb-3" style="object-fit: cover; height: 250px; width: 100%; object-position: top;">
+        {% else %}
+          <div class="p-5 text-muted">No Profile Image</div>
+        {% endif %}
+
+        <h5>{{ object.first_name }} {{ object.last_name }}</h5>
+        <p>{{ object.get_relation_display }} - {{ object.get_gender_display }}</p>
+
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Yes, Remove</button>
+          <a href="{% url 'view_family' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
